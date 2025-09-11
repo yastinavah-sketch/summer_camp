@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJust 4 Fun - Обучение для DJ и Экспертов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* --- CUSTOM FONT FACES FROM GITHUB --- */
+        @font-face {
+            font-family: 'Buyan';
+            src: url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/fonts/Buyan.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'TT Firs Neue';
+            src: url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/fonts/TT-Firs-Neue-Regular.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Определение основных цветов */
+        :root {
+            --bg-dark: #0A0A0A;
+            --bg-secondary: #111111;
+            --text-light: #F5F5F5;
+            --accent-lime: #DCFF1B;
+            --accent-lime-darker: #DEFC3A;
+            --surface-glass: rgba(255, 255, 255, 0.03);
+            --border-glass: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Обновленный фон */
+        body {
+            background: 
+                /* Scratched overlay */
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 3px),
+                /* Vintage grain texture */
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256' 256'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' result='noise' seed='2'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E"),
+                /* Organic gradient */
+                radial-gradient(ellipse at top left, rgba(220, 255, 27, 0.02) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom right, rgba(245, 245, 245, 0.01) 0%, transparent 50%),
+                /* Darkening overlay */
+                linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)),
+                /* New background image */
+                url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/%D1%84%D0%BE%D0%BD.jpg') center/cover no-repeat,
+                /* Fallback dark gradient */
+                linear-gradient(135deg, #0B0B0B 0%, #141414 25%, #0F0F0F 50%, #161616 75%, #0A0A0A 100%);
+            background-attachment: fixed;
+            color: var(--text-light);
+            font-family: 'TT Firs Neue', sans-serif; /* Default body font */
+            scroll-behavior: smooth;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        
+        /* Fallback fonts */
+        .font-heading { font-family: 'Jost', sans-serif; }
+
+        /* --- NEW FONT STYLES --- */
+        /* Section headers */
+        .section-title {
+            font-family: 'Buyan', sans-serif !important;
+            font-weight: bold; /* Make Buyan font bold */
+        }
+
+        /* Text blocks */
+        .main-text {
+             font-family: 'TT Firs Neue', sans-serif !important;
+        }
+
+        /* Модернизированные стили для кнопок */
+        .btn { transition: all 0.3s ease; }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-lime) 0%, var(--accent-lime-darker) 100%);
+            color: var(--bg-dark);
+            box-shadow: 
+                0 4px 16px rgba(220, 255, 27, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            transform-style: preserve-3d;
+            font-family: 'TT Firs Neue', sans-serif;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(220, 255, 27, 0.4),
+                0 0 20px rgba(220, 255, 27, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--border-glass); font-family: 'TT Firs Neue', sans-serif;}
+        .btn-secondary:hover { background-color: var(--surface-glass); color: var(--text-light); border-color: rgba(220, 255, 27, 0.15); }
+
+        /* Стили для табов */
+        .tab-btn.active { background-color: var(--accent-lime); color: var(--bg-dark); border-color: var(--accent-lime); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Обновленные карточки с solid-фоном */
+        .glass-card {
+            background-color: #222325; /* Solid dark color from the image */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256' 256'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' result='noise' seed='2'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            border: 1px solid rgba(255, 255, 255, 0.08); /* Keep a subtle border */
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            background-color: #2a2b2d; /* Slightly lighter on hover */
+            border-color: rgba(220, 255, 27, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-card-darker {
+             background-color: #1a1a1c;
+        }
+        .glass-card-darker:hover {
+            background-color: #222325;
+        }
+
+        /* Модернизированный hero-заголовок */
+        .text-glow {
+            text-shadow:
+                0 0 20px rgba(220, 255, 27, 0.5),
+                0 0 40px rgba(220, 255, 27, 0.3),
+                0 0 80px rgba(220, 255, 27, 0.1);
+        }
+
+        /* Animated border glow */
+        @keyframes borderGlow {
+            0%, 100% { border-color: var(--border-glass); }
+            50% { border-color: rgba(220, 255, 27, 0.2); }
+        }
+        .glowing-border:hover {
+            animation: borderGlow 2s ease-in-out infinite;
+        }
+
+        /* Анимация печатной машинки */
+        .testimonial-text {
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .testimonial-text.is-typing {
+            border-right: 2px solid var(--accent-lime);
+            animation: blink-cursor 1s step-end infinite;
+            white-space: normal;
+        }
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent-lime); }
+        }
+        
+        /* 3D hover эффект для отзывов */
+        .testimonial-slider-container {
+            perspective: 1200px;
+        }
+        .testimonial-card-3d {
+            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .testimonial-card-3d:hover {
+            transform: translateZ(60px) rotateX(5deg) rotateY(5deg);
+        }
+        .testimonial-card-3d:hover .testimonial-text {
+            text-shadow: 0 0 10px rgba(220, 255, 27, 0.5);
+        }
+        
+        /* Floating animation для фонового шума */
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        .container::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DCFF1B' fill-opacity='0.008'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='53' cy='53' r='1'/%3E%3Ccircle cx='37' cy='23' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* GSAP Animation Styles */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(60px);
+        }
+        /* Style for split text animation */
+        .hero-title span {
+            display: inline-block;
+        }
+
+        /* Sound Wave Animation */
+        .sound-wave {
+            position: relative;
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-lime), transparent);
+            animation: wave-pulse 2.5s ease-in-out infinite;
+            margin-bottom: 5rem;
+        }
+        @keyframes wave-pulse {
+            0%, 100% { transform: scaleX(0.5) scaleY(1); opacity: 0.5; }
+            50% { transform: scaleX(1.5) scaleY(3); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="selection:bg-lime-300 selection:text-black">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+
+        <!-- 1. Hero Section -->
+        <header class="text-center mb-16 md:mb-24 fade-in-up">
+            <div class="mb-8 flex justify-center">
+                <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/zyro-image_(5)-transformed%201.png" alt="Agata DJ" class="w-40 h-40 rounded-full object-cover border-4 border-lime-300 shadow-xl shadow-lime-500/10">
+            </div>
+            <h1 class="hero-title section-title text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJUST 4 FUN</h1>
+            <h2 class="section-title text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
+            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 italic">
+                преврати хаос в систему и выйди на новый уровень дохода.
+            </p>
+            <div class="mt-10">
+                <a href="#tariffs" class="btn btn-primary font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                    УЗНАТЬ ТАРИФЫ И СВОБОДНЫЕ МЕСТА
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Program Content -->
+        <main>
+            <!-- DJ Program -->
+            <section id="content-dj">
+                 <div class="text-center mb-12 fade-in-up">
+                    <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ПРОГРАММА</h2>
+                    <p class="mt-2 text-lg" style="font-family: 'TT Firs Neue', sans-serif;">Обучение [Сентябрь — Ноябрь]</p>
+                    <p class="text-base text-gray-200" style="font-family: 'TT Firs Neue', sans-serif;">Длительность: 4 - 6 недель</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto p-6 mb-12 fade-in-up glass-card">
+                     <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', sans-serif;">Для кого это обучение?</h3>
+                     <p class="text-gray-400 mb-4 main-text">Для DJ, которые хотят:</p>
+                     <ul class="space-y-3 text-gray-300 main-text">
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Перестать играть за копейки или бесплатно.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Пробить «стеклянный потолок» и выйти на новый уровень дохода и площадок.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Избавиться от хаоса в голове, страхов и синдрома самозванца.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Научиться эффективно продвигать себя и строить карьеру, а не просто сводить треки.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Найти свой уникальный стиль и баланс между творчеством и коммерцией.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
+                     </ul>
+                </div>
+
+                <!-- Testimonials Section -->
+                <section class="my-16 md:my-24 fade-in-up">
+                    <h2 class="section-title text-center text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ЧТО ГОВОРЯТ УЧЕНИКИ</h2>
+                    <div class="mt-12 max-w-xl mx-auto relative testimonial-slider-container">
+                        <div class="overflow-hidden">
+                            <div id="testimonial-slider" class="flex transition-transform duration-500 ease-in-out">
+                                <!-- Testimonial 1 -->
+                                <div class="w-full flex-shrink-0 p-2">
+                                    <div class="p-8 testimonial-card-3d glass-card">
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic main-text" data-speed="30" data-original-text="💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».">💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».</p>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 2 -->
+                                <div class="w-full flex-shrink-0 p-2">
+                                    <div class="p-8 testimonial-card-3d glass-card">
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic main-text" data-speed="30" data-original-text="✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».">✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».</p>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 3 -->
+                                <div class="w-full flex-shrink-0 p-2">
+                                    <div class="p-8 testimonial-card-3d glass-card">
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic main-text" data-speed="25" data-original-text="💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».">💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».</p>
+                                    </div>
+                                </div>
+                                <!-- Testimonial 4 -->
+                                <div class="w-full flex-shrink-0 p-2">
+                                     <div class="p-8 testimonial-card-3d glass-card">
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic main-text" data-speed="30" data-original-text="💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».">💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slider Controls -->
+                        <button id="prev-testimonial" class="absolute top-1/2 left-0 -translate-y-1/2 -ml-4 md:-ml-12 text-lime-300 hover:text-white transition z-10">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                        </button>
+                        <button id="next-testimonial" class="absolute top-1/2 right-0 -translate-y-1/2 -mr-4 md:-mr-12 text-lime-300 hover:text-white transition z-10">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                        </button>
+                    </div>
+                </section>
+                
+                <!-- DJ Tariffs Tabs -->
+                <div id="tariffs" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8 fade-in-up">
+                     <button class="tab-btn active btn btn-secondary font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="baza">🎧 DJust - Baza</button>
+                     <button class="tab-btn btn btn-secondary font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="supreme">🚀 DJust - Supreme</button>
+                     <button class="tab-btn btn btn-secondary font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="all-in">👑 DJust - ALL IN</button>
+                </div>
+
+                <div class="max-w-4xl mx-auto fade-in-up">
+                    <!-- Baza Content -->
+                    <div id="tab-content-baza" class="tab-content active space-y-4">
+                        <div class="p-6 glass-card">
+                            <p class="text-gray-300 mb-4 main-text">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
+                             <ul class="space-y-3 text-gray-300 main-text">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 3 месяца</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Подкасты на 6 разных тем</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Домашние задания для внедрения изученного материала</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Групповой чат в Telegram (без прямой обратной связи от Агаты)</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ в комьюнити учеников Агаты</li>
+                             </ul>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №1: Цели и Декомпозиция</h4>
+                            <p class="text-gray-400 mt-2 main-text">Зачем ставить цель? Почему и как необходимо декомпозировать свой путь в диджеинге.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №2,3: Техническая База</h4>
+                            <p class="text-gray-400 mt-2 main-text">Как охотиться за музыкой, где качать, как слушать и слышать. Грамотная библиотека и архитектура микса.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №4: База по Позиционированию</h4>
+                            <p class="text-gray-400 mt-2 main-text">Круги влияния: физический/внутренний, медиа/внешний. Главный инструмент влияния: контент.</p>
+                        </div>
+                         <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ВИДЕОПОДКАСТ №5: Образ Артиста</h4>
+                            <p class="text-gray-400 mt-2 main-text">Почему образ необходим. Якоря и триггеры. Собственный стиль, как конкурентное преимущество.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №6: Психологические Баги DJ</h4>
+                            <p class="text-gray-400 mt-2 main-text">Выявляем и убираем главные тормоза: страх самозванца, страх цены/отказа, ограничивающие убеждения.</p>
+                        </div>
+                    </div>
+
+                    <!-- Supreme Content -->
+                    <div id="tab-content-supreme" class="tab-content space-y-4">
+                        <div class="p-6 glass-card">
+                             <p class="text-gray-300 mb-4 main-text">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
+                             <ul class="space-y-3 text-gray-300 main-text">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 5 месяцев</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Личное взаимодействие с Агатой</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> 2 Мастермайнда с Агатой: Групповые разборы</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Отдельный канал тарифа</li>
+                             </ul>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ВИДЕОПОДКАСТ №7: Создаем впечатление через контент</h4>
+                            <p class="text-gray-400 mt-2 main-text">Какой бывает контент: горячий, информационный, повышающий авторитет. Как снимать контент на вечеринках.</p>
+                        </div>
+                         <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №8: Внутри комьюнити</h4>
+                            <p class="text-gray-400 mt-2 main-text">Почему важно быть в комьюнити? Стратегия ребенка. Стратегия Творца. Принципы внедрения в комьюнити.</p>
+                        </div>
+                         <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ПОДКАСТ №9: Искусство переговоров</h4>
+                            <p class="text-gray-400 mt-2 main-text">Что делать, когда вы получили заявку? Как объявить и поменять гонорар. Работа с брендами.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">ВИДЕОПОДКАСТ №10: Подготовка к гастролям</h4>
+                            <p class="text-gray-400 mt-2 main-text">3 источника информации о вас: Tap link, Press pack, Press kit. Tех-, контент- и бытовой райдер.</p>
+                        </div>
+                    </div>
+
+                    <!-- ALL IN Content -->
+                    <div id="tab-content-all-in" class="tab-content space-y-4">
+                        <div class="p-6 glass-card">
+                             <p class="text-gray-300 mb-4 main-text">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
+                             <ul class="space-y-3 text-gray-300 main-text">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 7 месяцев</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Глубокая трансформация мышления на сессиях с психологом</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по написанию музыки от Андрея Paysage</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по созданию контента с помощью AI</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по организации вечеринок от Влада Че</li>
+                             </ul>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">🧠 2 сессии с психологом</h4>
+                            <p class="text-gray-400 mt-2 main-text">Глубокая проработка синдрома самозванца, страха роста и убеждений, которые мешают вам называть высокие гонорары.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">🎹 Написание музыки</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Андрей Paysage</p>
+                            <p class="text-gray-400 mt-2 main-text">Создание трека с нуля, анализ композиций, развитие уникального стиля. Секреты профессионального звука.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">🤖 Создание контента с помощью AI</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Анастасия Вахромеева</p>
+                            <p class="text-gray-400 mt-2 main-text">Научитесь реализовывать контент-стратегии с помощью ИИ. Делегируйте нейросетям создание идей, сценариев и текстов.</p>
+                        </div>
+                        <div class="p-6 glass-card">
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', sans-serif;">🪩 Организация вечеринок</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Влад Че</p>
+                            <p class="text-gray-400 mt-2 main-text">Пошаговая организация мероприятия для артиста: от концепции до реализации. Ключевые факторы успеха: как спланировать и провести успешное событие.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                     <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-bold text-lg py-3 px-6 sm:px-8 rounded-lg inline-block">НАПИСАТЬ В ЛС, ЧТОБЫ УЗНАТЬ ЦЕНУ</a>
+                 </div>
+
+            </section>
+        </main>
+        
+        <!-- Sound Wave -->
+        <div class="sound-wave fade-in-up"></div>
+        
+        <!-- New Banner -->
+        <section class="mt-20 md:mt-32 fade-in-up">
+             <div class="max-w-4xl mx-auto text-center p-8 md:p-12 glowing-border glass-card glass-card-darker">
+                <h2 class="section-title text-2xl sm:text-3xl tracking-wide" style="color: var(--accent-lime-darker);">МОСКВА, ДУБАЙ ИЛИ МЕКСИКА? ТВОЯ МУЗЫКА НЕ ЗНАЕТ ГРАНИЦ.</h2>
+                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 leading-relaxed main-text">
+                    Пока ты думаешь, что гастроли — это для избранных, артисты DJust 4 FUN играют в Тулуме и становятся резидентами в Дубае. Путешествия — это не удача, а результат правильной стратегии. я знаю, как ее выстроить.
+                </p>
+                <div class="mt-10">
+                    <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                        СОЗДАЙ КАРЬЕРУ СВОЕЙ МЕЧТЫ
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer with updated year -->
+        <footer class="mt-20 md:mt-32">
+             <p class="text-center text-gray-600 mt-8 text-sm">© 2025 DJust 4 Fun. Все права защищены.</p>
+             <div class="text-center text-gray-500 mt-6 text-sm space-y-2" style="font-family: 'TT Firs Neue', sans-serif;">
+                 <div class="text-gray-600 space-y-1">
+                    <p>ИП Захарова-Хлущевская Агата Онореевна</p>
+                    <p>ИНН: 772578516741</p>
+                    <p>ОГРНИП: 324774600133556</p>
+                 </div>
+                 <div class="pt-2 space-x-4">
+                    <a href="https://docs.google.com/document/d/1vmhDjXwvH2g7IFRNpjGo6Eft-c_P1qBMqCSLq5XFx-I/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Договор оферты</a>
+                    <span class="text-gray-600">|</span>
+                    <a href="https://docs.google.com/document/d/10eXuvW3stQLqPqW6WNgwwQpl1Iq_326uHZxEALlSTz8/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Политика конфиденциальности</a>
+                 </div>
+             </div>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tabs Logic
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    tabContents.forEach(content => {
+                        content.classList.toggle('active', content.id === `tab-content-${tabId}`);
+                    });
+                });
+            });
+
+            // --- Slider and Typewriter Logic ---
+            const sliderContainer = document.getElementById('testimonial-slider');
+            const slides = Array.from(sliderContainer.children);
+            const prevButton = document.getElementById('prev-testimonial');
+            const nextButton = document.getElementById('next-testimonial');
+            let currentIndex = 0;
+            let currentTypewriterInterval;
+
+            function startTypewriter(card) {
+                if (window.innerWidth < 1024) return;
+                const textElement = card.querySelector('.testimonial-text');
+                const originalText = textElement.dataset.originalText;
+                if (card.dataset.typed === 'true') return;
+
+                if (currentTypewriterInterval) clearInterval(currentTypewriterInterval);
+                
+                card.dataset.typed = 'true';
+                const speed = parseInt(textElement.dataset.speed) || 30;
+                
+                textElement.textContent = '';
+                textElement.classList.add('is-typing');
+                
+                let i = 0;
+                currentTypewriterInterval = setInterval(() => {
+                    if (i < originalText.length) {
+                        textElement.textContent += originalText.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(currentTypewriterInterval);
+                        textElement.classList.remove('is-typing');
+                    }
+                }, speed);
+            }
+
+            function resetTypewriter(slide) {
+                const card = slide.querySelector('.testimonial-card-3d');
+                if(!card) return;
+                
+                if (currentTypewriterInterval) clearInterval(currentTypewriterInterval);
+
+                const textElement = card.querySelector('.testimonial-text');
+                textElement.textContent = textElement.dataset.originalText;
+                textElement.classList.remove('is-typing');
+                card.dataset.typed = 'false';
+            }
+
+            slides.forEach(slide => {
+                const card = slide.querySelector('.testimonial-card-3d');
+                if (card) {
+                    card.addEventListener('mouseenter', () => startTypewriter(card));
+                }
+            });
+            
+            function updateSlider() {
+                const offset = -currentIndex * 100;
+                sliderContainer.style.transform = `translateX(${offset}%)`;
+                slides.forEach(slide => resetTypewriter(slide));
+            }
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % slides.length;
+                updateSlider();
+            });
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                updateSlider();
+            });
+
+            // --- GSAP Animations ---
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.utils.toArray('.fade-in-up').forEach(element => {
+                gsap.fromTo(element, 
+                    { opacity: 0, y: 60 },
+                    {
+                        opacity: 1,
+                        y: 0,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 85%",
+                            toggleActions: "play none none reverse"
+                        }
+                    }
+                );
+            });
+            
+            // Manual SplitText functionality
+            if (document.querySelector('.hero-title')) {
+                const heroTitle = document.querySelector('.hero-title');
+                const text = heroTitle.textContent.trim();
+                heroTitle.textContent = '';
+                
+                text.split('').forEach(char => {
+                    const span = document.createElement('span');
+                    span.textContent = char;
+                    if(char === ' ') span.style.width = '1rem'; // handle spaces
+                    heroTitle.appendChild(span);
+                });
+
+                gsap.from(heroTitle.children, {
+                    opacity: 0,
+                    y: 100,
+                    rotationX: -90,
+                    stagger: 0.02,
+                    duration: 1,
+                    ease: "back.out(1.7)",
+                    delay: 0.5
+                });
+            }
+
+            function magneticEffect(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                gsap.to(this, {
+                    x: x * 0.3,
+                    y: y * 0.3,
+                    rotation: x * 0.05,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            }
+
+            function resetMagnetic() {
+                gsap.to(this, {
+                    x: 0,
+                    y: 0,
+                    rotation: 0,
+                    duration: 0.5,
+                    ease: "elastic.out(1, 0.3)"
+                });
+            }
+
+            document.querySelectorAll('.btn-primary').forEach(btn => {
+                btn.addEventListener('mousemove', magneticEffect);
+                btn.addEventListener('mouseleave', resetMagnetic);
+            });
+        });
+    </script>
+</body>
+</html>
+
