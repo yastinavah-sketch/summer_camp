@@ -17,7 +17,7 @@
             --accent-lime-darker: #DEFC3A;
         }
 
-        /* Кастомные шрифты. Bebas Neue - для заголовков, Jost - для подзаголовков, Inter - для основного текста */
+        /* Кастомные шрифты */
         body {
             background-color: var(--bg-dark);
             color: var(--text-light);
@@ -30,51 +30,60 @@
         .font-body { font-family: 'Inter', sans-serif; }
         
         /* Стили для кнопок */
-        .btn {
-            transition: all 0.3s ease;
-        }
-        .btn-primary {
-            background-color: var(--accent-lime);
-            color: var(--bg-dark);
-        }
-        .btn-primary:hover {
-            background-color: var(--text-light);
-            transform: scale(1.05);
-        }
-        .btn-secondary {
-            background-color: transparent;
-            color: var(--text-light);
-            border: 2px solid var(--text-light);
-        }
-        .btn-secondary:hover {
-            background-color: var(--text-light);
-            color: var(--bg-dark);
-        }
+        .btn { transition: all 0.3s ease; }
+        .btn-primary { background-color: var(--accent-lime); color: var(--bg-dark); }
+        .btn-primary:hover { background-color: var(--text-light); transform: scale(1.05); }
+        .btn-secondary { background-color: transparent; color: var(--text-light); border: 2px solid var(--text-light); }
+        .btn-secondary:hover { background-color: var(--text-light); color: var(--bg-dark); }
 
         /* Стили для табов */
-        .tab-btn.active {
-            background-color: var(--accent-lime);
-            color: var(--bg-dark);
-            border-color: var(--accent-lime);
-        }
-        .tab-content {
-            display: none;
-        }
-        .tab-content.active {
-            display: block;
+        .tab-btn.active { background-color: var(--accent-lime); color: var(--bg-dark); border-color: var(--accent-lime); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        
+        /* Дополнительные стили */
+        .glowing-border { border: 2px solid transparent; transition: border-color 0.3s ease; }
+        .glowing-border:hover { border-color: var(--accent-lime); }
+        .text-glow { text-shadow: 0 0 8px rgba(220, 255, 27, 0.5); }
+
+        /* Анимация печатной машинки */
+        .testimonial-text {
+            font-family: 'Inter', sans-serif; /* TT Firs Neue substitute */
+            min-height: 140px; /* Предотвращает "прыжок" макета при очистке текста */
         }
         
-        /* Дополнительные стили для красоты */
-        .glowing-border {
-            border: 2px solid transparent;
-            transition: border-color 0.3s ease;
+        .testimonial-text.is-typing {
+            border-right: 2px solid var(--accent-lime);
+            animation: blink-cursor 1s step-end infinite;
+            white-space: normal;
         }
-        .glowing-border:hover {
-            border-color: var(--accent-lime);
+
+        @keyframes blink-cursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--accent-lime); }
         }
-        
-        .text-glow {
-             text-shadow: 0 0 8px rgba(220, 255, 27, 0.5);
+
+        /* 3D hover эффект для отзывов */
+        .testimonial-card-3d {
+            perspective: 1200px;
+            transform: translateZ(0);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        .testimonial-card-3d:hover {
+            transform:
+                perspective(1200px)
+                translateZ(60px)
+                rotateX(5deg)
+                rotateY(5deg)
+                scale(1.03);
+            box-shadow:
+                0 30px 60px rgba(0, 0, 0, 0.4),
+                0 0 40px rgba(220, 255, 27, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        .testimonial-card-3d:hover .testimonial-text {
+            text-shadow: 0 0 10px rgba(220, 255, 27, 0.3);
         }
     </style>
 </head>
@@ -84,6 +93,9 @@
 
         <!-- 1. Hero Section -->
         <header class="text-center mb-16 md:mb-24">
+            <div class="mb-8 flex justify-center">
+                <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/zyro-image_(5)-transformed%201.png" alt="Agata DJ" class="w-40 h-40 rounded-full object-cover border-4 border-lime-300 shadow-xl shadow-lime-500/10">
+            </div>
             <h1 class="font-display text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJust 4 Fun</h1>
             <h2 class="font-heading font-bold text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
             <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
@@ -117,6 +129,29 @@
                         <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
                      </ul>
                 </div>
+
+                <!-- Testimonials Section -->
+                <section class="my-16 md:my-24">
+                    <h2 class="font-display text-center text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ЧТО ГОВОРЯТ УЧЕНИКИ</h2>
+                    <div class="mt-12 max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Testimonial 1 -->
+                        <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
+                            <p class="text-xl text-gray-300 leading-relaxed testimonial-text" data-speed="30">💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».</p>
+                        </div>
+                        <!-- Testimonial 2 -->
+                        <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
+                            <p class="text-xl text-gray-300 leading-relaxed testimonial-text" data-speed="30">✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».</p>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
+                            <p class="text-xl text-gray-300 leading-relaxed testimonial-text" data-speed="25">💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».</p>
+                        </div>
+                        <!-- Testimonial 4 -->
+                        <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
+                            <p class="text-xl text-gray-300 leading-relaxed testimonial-text" data-speed="30">💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».</p>
+                        </div>
+                    </div>
+                </section>
                 
                 <!-- DJ Tariffs Tabs -->
                 <div id="tariffs" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
@@ -131,6 +166,7 @@
                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
                             <p class="text-gray-300 mb-4">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
                              <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 3 месяца</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Подкасты на 6 разных тем</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Домашние задания для внедрения изученного материала</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Групповой чат в Telegram (без прямой обратной связи от Агаты)</li>
@@ -164,6 +200,7 @@
                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
                              <p class="text-gray-300 mb-4">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
                              <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 5 месяцев</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Личное взаимодействие с Агатой</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> 2 Мастермайнда с Агатой: Групповые разборы</li>
@@ -193,6 +230,7 @@
                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
                              <p class="text-gray-300 mb-4">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
                              <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 7 месяцев</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Глубокая трансформация мышления на сессиях с психологом</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по написанию музыки от Андрея Paysage</li>
@@ -243,20 +281,19 @@
             </div>
         </section>
 
-        <!-- 4. Final CTA -->
+        <!-- Footer with updated year -->
         <footer class="mt-20 md:mt-32">
-            <div class="max-w-4xl mx-auto text-center bg-zinc-900 p-8 md:p-12 rounded-lg border-2" style="border-color: var(--accent-lime);">
-                <h2 class="font-display font-black text-5xl sm:text-6xl text-glow" style="color: var(--accent-lime);">ГОТОВ К ПРОРЫВУ?</h2>
-                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
-                    Осталось несколько мест на ближайший поток. Напиши нам, чтобы узнать актуальные тарифы, наличие мест и получить ответы на все вопросы.
-                </p>
-                <div class="mt-10">
-                    <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">
-                        ЗАДАТЬ ВОПРОС И ЗАБРОНИРОВАТЬ МЕСТО
-                    </a>
-                </div>
-            </div>
-             <p class="text-center text-gray-600 mt-8 text-sm">© 2024 DJust 4 Fun. Все права защищены.</p>
+             <p class="text-center text-gray-600 mt-8 text-sm">© 2025 DJust 4 Fun. Все права защищены.</p>
+             <div class="text-center text-gray-600 mt-4 text-xs space-y-1">
+                <p>ИП Захарова-Хлущевская Агата Онореевна</p>
+                <p>ИНН: 772578516741</p>
+                <p>ОГРНИП: 324774600133556</p>
+             </div>
+             <div class="text-center text-gray-500 mt-6 text-sm space-x-4">
+                <a href="https://docs.google.com/document/d/1vmhDjXwvH2g7IFRNpjGo6Eft-c_P1qBMqCSLq5XFx-I/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Договор оферты</a>
+                <span class="text-gray-600">|</span>
+                <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Политика конфиденциальности</a>
+             </div>
         </footer>
 
     </div>
@@ -286,9 +323,38 @@
                 });
             });
 
+            // Typewriter effect on hover
+            document.querySelectorAll('.testimonial-card-3d').forEach(card => {
+                const textElement = card.querySelector('.testimonial-text');
+                const originalText = textElement.textContent.trim();
+
+                card.addEventListener('mouseover', () => {
+                    // Run animation only once
+                    if (card.classList.contains('has-typed')) {
+                        return;
+                    }
+                    card.classList.add('has-typed');
+
+                    const speed = parseInt(textElement.dataset.speed) || 30;
+                    
+                    textElement.textContent = ''; // Clear text
+                    textElement.classList.add('is-typing'); // Show cursor
+
+                    let i = 0;
+                    const typeInterval = setInterval(() => {
+                        if (i < originalText.length) {
+                            textElement.textContent += originalText.charAt(i);
+                            i++;
+                        } else {
+                            clearInterval(typeInterval);
+                            // Animation finished, remove cursor class
+                            textElement.classList.remove('is-typing');
+                        }
+                    }, speed);
+                });
+            });
         });
     </script>
 </body>
 </html>
-
 
