@@ -57,19 +57,11 @@
         /* Обновленный фон */
         body {
             background: 
-                /* Scratched overlay */
-                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(255,255,255,0.01) 1px, rgba(255,255,255,0.01) 3px),
-                /* Vintage grain texture */
-                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256' viewBox='0 0 256' 256'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' result='noise' seed='2'/%3E%3CfeColorMatrix in='noise' type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E"),
-                /* Organic gradient */
-                radial-gradient(ellipse at top left, rgba(220, 255, 27, 0.02) 0%, transparent 50%),
-                radial-gradient(ellipse at bottom right, rgba(245, 245, 245, 0.01) 0%, transparent 50%),
                 /* Darkening overlay */
-                linear-gradient(rgba(10, 10, 10, 0.7), rgba(10, 10, 10, 0.7)),
-                /* New background image */
-                url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/%D1%84%D0%BE%D0%BD.jpg') center/cover no-repeat,
-                /* Fallback dark gradient */
-                linear-gradient(135deg, #0B0B0B 0%, #141414 25%, #0F0F0F 50%, #161616 75%, #0A0A0A 100%);
+                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                /* Background image */
+                url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/%D1%84%D0%BE%D0%BD.jpg') center/cover no-repeat;
+            background-blend-mode: overlay;
             background-attachment: fixed;
             color: var(--text-light);
             font-family: 'TT Firs Neue', 'Montserrat', sans-serif; /* Default body font with fallback */
