@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJust 4 Fun - Обучение для DJ и Экспертов</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;700&family=Jost:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Определение основных цветов и шрифтов */
+        :root {
+            --bg-dark: #0A0A0A;
+            --text-light: #F5F5F5;
+            --accent-lime: #DCFF1B;
+            --accent-lime-darker: #DEFC3A;
+        }
+
+        /* Кастомные шрифты. Bebas Neue - для заголовков, Jost - для подзаголовков, Inter - для основного текста */
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .font-display { font-family: 'Bebas Neue', sans-serif; }
+        .font-heading { font-family: 'Jost', sans-serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        
+        /* Стили для кнопок */
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: var(--accent-lime);
+            color: var(--bg-dark);
+        }
+        .btn-primary:hover {
+            background-color: var(--text-light);
+            transform: scale(1.05);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-light);
+            border: 2px solid var(--text-light);
+        }
+        .btn-secondary:hover {
+            background-color: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        /* Стили для табов */
+        .tab-btn.active {
+            background-color: var(--accent-lime);
+            color: var(--bg-dark);
+            border-color: var(--accent-lime);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Дополнительные стили для красоты */
+        .glowing-border {
+            border: 2px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+        .glowing-border:hover {
+            border-color: var(--accent-lime);
+        }
+        
+        .text-glow {
+             text-shadow: 0 0 8px rgba(220, 255, 27, 0.5);
+        }
+    </style>
+</head>
+<body class="font-body selection:bg-lime-300 selection:text-black">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+
+        <!-- 1. Hero Section -->
+        <header class="text-center mb-16 md:mb-24">
+            <h1 class="font-display text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJust 4 Fun</h1>
+            <h2 class="font-heading font-bold text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
+            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
+                Преврати хаос в систему и выйди на новый уровень дохода.
+            </p>
+            <div class="mt-10">
+                <a href="#tariffs" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                    УЗНАТЬ ТАРИФЫ И СВОБОДНЫЕ МЕСТА
+                </a>
+            </div>
+        </header>
+
+        <!-- 2. Program Content -->
+        <main>
+            <!-- DJ Program -->
+            <section id="content-dj">
+                 <div class="text-center mb-12">
+                    <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ПРОГРАММА</h2>
+                    <p class="font-heading mt-2 text-lg">Обучение [Сентябрь — Ноябрь] | Длительность: 4 - 6 недель</p>
+                </div>
+                
+                <div class="max-w-3xl mx-auto bg-zinc-900 p-6 rounded-lg border border-zinc-800 mb-12">
+                     <h3 class="font-heading font-bold text-xl mb-4">Для кого это обучение?</h3>
+                     <p class="text-gray-400 mb-4">Для DJ, которые хотят:</p>
+                     <ul class="space-y-3 text-gray-300">
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Перестать играть за копейки или бесплатно.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Пробить «стеклянный потолок» и выйти на новый уровень дохода и площадок.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Избавиться от хаоса в голове, страхов и синдрома самозванца.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Научиться эффективно продвигать себя и строить карьеру, а не просто сводить треки.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Найти свой уникальный стиль и баланс между творчеством и коммерцией.</li>
+                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
+                     </ul>
+                </div>
+                
+                <!-- DJ Tariffs Tabs -->
+                <div id="tariffs" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-8">
+                     <button class="tab-btn active btn btn-secondary font-heading font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="baza">🎧 DJust - Baza</button>
+                     <button class="tab-btn btn btn-secondary font-heading font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="supreme">🚀 DJust - Supreme</button>
+                     <button class="tab-btn btn btn-secondary font-heading font-semibold py-2 px-5 rounded-lg text-sm md:text-base" data-tab="all-in">👑 DJust - ALL IN</button>
+                </div>
+
+                <div class="max-w-4xl mx-auto">
+                    <!-- Baza Content -->
+                    <div id="tab-content-baza" class="tab-content active space-y-4">
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <p class="text-gray-300 mb-4">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
+                             <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Подкасты на 6 разных тем</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Домашние задания для внедрения изученного материала</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Групповой чат в Telegram (без прямой обратной связи от Агаты)</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ в комьюнити учеников Агаты</li>
+                             </ul>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №1: Цели и Декомпозиция</h4>
+                            <p class="text-gray-400 mt-2">Зачем ставить цель? Почему и как необходимо декомпозировать свой путь в диджеинге.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №2,3: Техническая База</h4>
+                            <p class="text-gray-400 mt-2">Как охотиться за музыкой, где качать, как слушать и слышать. Грамотная библиотека и архитектура микса.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №4: База по Позиционированию</h4>
+                            <p class="text-gray-400 mt-2">Круги влияния: физический/внутренний, медиа/внешний. Главный инструмент влияния: контент.</p>
+                        </div>
+                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ВИДЕОПОДКАСТ №5: Образ Артиста</h4>
+                            <p class="text-gray-400 mt-2">Почему образ необходим. Якоря и триггеры. Собственный стиль, как конкурентное преимущество.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №6: Психологические Баги DJ</h4>
+                            <p class="text-gray-400 mt-2">Выявляем и убираем главные тормоза: страх самозванца, страх цены/отказа, ограничивающие убеждения.</p>
+                        </div>
+                    </div>
+
+                    <!-- Supreme Content -->
+                    <div id="tab-content-supreme" class="tab-content space-y-4">
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                             <p class="text-gray-300 mb-4">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
+                             <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Личное взаимодействие с Агатой</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> 2 Мастермайнда с Агатой: Групповые разборы</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Отдельный канал тарифа</li>
+                             </ul>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ВИДЕОПОДКАСТ №7: Создаем впечатление через контент</h4>
+                            <p class="text-gray-400 mt-2">Какой бывает контент: горячий, информационный, повышающий авторитет. Как снимать контент на вечеринках.</p>
+                        </div>
+                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №8: Внутри комьюнити</h4>
+                            <p class="text-gray-400 mt-2">Почему важно быть в комьюнити? Стратегия ребенка. Стратегия Творца. Принципы внедрения в комьюнити.</p>
+                        </div>
+                         <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ПОДКАСТ №9: Искусство переговоров</h4>
+                            <p class="text-gray-400 mt-2">Что делать, когда вы получили заявку? Как объявить и поменять гонорар. Работа с брендами.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">ВИДЕОПОДКАСТ №10: Подготовка к гастролям</h4>
+                            <p class="text-gray-400 mt-2">3 источника информации о вас: Tap link, Press pack, Press kit. Tех-, контент- и бытовой райдер.</p>
+                        </div>
+                    </div>
+
+                    <!-- ALL IN Content -->
+                    <div id="tab-content-all-in" class="tab-content space-y-4">
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                             <p class="text-gray-300 mb-4">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
+                             <ul class="space-y-3 text-gray-300">
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Глубокая трансформация мышления на сессиях с психологом</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по написанию музыки от Андрея Paysage</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по созданию контента с помощью AI</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по организации вечеринок от Влада Че</li>
+                             </ul>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">🧠 2 сессии с психологом</h4>
+                            <p class="text-gray-400 mt-2">Глубокая проработка синдрома самозванца, страха роста и убеждений, которые мешают вам называть высокие гонорары.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">🎹 Написание музыки</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Андрей Paysage</p>
+                            <p class="text-gray-400 mt-2">Создание трека с нуля, анализ композиций, развитие уникального стиля. Секреты профессионального звука.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">🤖 Создание контента с помощью AI</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Анастасия Вахромеева</p>
+                            <p class="text-gray-400 mt-2">Научитесь реализовывать контент-стратегии с помощью ИИ. Делегируйте нейросетям создание идей, сценариев и текстов.</p>
+                        </div>
+                        <div class="bg-zinc-900 border border-zinc-800 rounded-lg p-6">
+                            <h4 class="font-heading font-bold text-lg">🪩 Организация вечеринок</h4>
+                            <p class="text-sm text-gray-400 mt-1">Спикер: Влад Че</p>
+                            <p class="text-gray-400 mt-2">Артисты смогут организовать свое собственное мероприятие, будут понимать ключевые шаги для успеха.</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="text-center mt-12">
+                     <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">НАПИСАТЬ В ЛС, ЧТОБЫ УЗНАТЬ ЦЕНУ</a>
+                 </div>
+
+            </section>
+        </main>
+        
+        <!-- New Banner -->
+        <section class="mt-20 md:mt-32">
+             <div class="max-w-4xl mx-auto text-center bg-zinc-900 p-8 md:p-12 rounded-lg border border-zinc-800 glowing-border">
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl" style="color: var(--accent-lime-darker);">МОСКВА, ДУБАЙ ИЛИ МЕКСИКА? ТВОЯ МУЗЫКА НЕ ЗНАЕТ ГРАНИЦ.</h2>
+                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
+                    Пока ты думаешь, что гастроли — это для избранных, наши артисты играют в Тулуме и становятся резидентами в Дубае. Путешествия — это не удача, а результат правильной стратегии. Мы знаем, как ее выстроить.
+                </p>
+                <div class="mt-10">
+                    <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                        СОЗДАЙ КАРЬЕРУ СВОЕЙ МЕЧТЫ
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Final CTA -->
+        <footer class="mt-20 md:mt-32">
+            <div class="max-w-4xl mx-auto text-center bg-zinc-900 p-8 md:p-12 rounded-lg border-2" style="border-color: var(--accent-lime);">
+                <h2 class="font-display font-black text-5xl sm:text-6xl text-glow" style="color: var(--accent-lime);">ГОТОВ К ПРОРЫВУ?</h2>
+                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
+                    Осталось несколько мест на ближайший поток. Напиши нам, чтобы узнать актуальные тарифы, наличие мест и получить ответы на все вопросы.
+                </p>
+                <div class="mt-10">
+                    <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                        ЗАДАТЬ ВОПРОС И ЗАБРОНИРОВАТЬ МЕСТО
+                    </a>
+                </div>
+            </div>
+             <p class="text-center text-gray-600 mt-8 text-sm">© 2024 DJust 4 Fun. Все права защищены.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Tabs Logic
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const tabId = button.dataset.tab;
+
+                    // Update buttons state
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Update content visibility
+                    tabContents.forEach(content => {
+                        if (content.id === `tab-content-${tabId}`) {
+                            content.classList.add('active');
+                        } else {
+                            content.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
+
+
