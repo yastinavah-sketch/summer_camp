@@ -76,6 +76,41 @@
             scroll-behavior: smooth;
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
+
+        /* --- GRUNGE ANIMATIONS --- */
+        @keyframes shaky-text {
+            0%, 100% { transform: translate(0, 0) rotate(0); }
+            20% { transform: translate(0.8px, -0.8px) rotate(0.15deg); }
+            40% { transform: translate(-0.8px, 0.5px) rotate(-0.15deg); }
+            60% { transform: translate(0.5px, 0.8px) rotate(0.05deg); }
+            80% { transform: translate(-0.5px, -0.5px) rotate(-0.05deg); }
+        }
+
+        @keyframes film-grain {
+            0%, 100% { transform: translate(0, 0); }
+            10% { transform: translate(-1%, -2%); }
+            20% { transform: translate(2%, 1%); }
+            30% { transform: translate(-2%, 2%); }
+            40% { transform: translate(1%, -1%); }
+            50% { transform: translate(-1%, 1%); }
+            60% { transform: translate(2%, 2%); }
+            70% { transform: translate(-2%, -1%); }
+            80% { transform: translate(1%, 2%); }
+            90% { transform: translate(2%, -2%); }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            pointer-events: none;
+            z-index: 1000;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='noise'%3E%3CfeTurbulence baseFrequency='0.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            animation: film-grain 1s steps(4, end) infinite;
+        }
         
         /* --- NEW FONT STYLES --- */
         /* Section headers with a better fallback */
@@ -84,6 +119,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-weight: bold;
+            animation: shaky-text 4s ease-in-out infinite;
         }
 
         /* Main hero title needs Buyan as well */
@@ -136,6 +172,8 @@
             border-radius: 16px;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
         .glass-card:hover {
             background-color: #2a2b2d; /* Slightly lighter on hover */
@@ -149,6 +187,58 @@
         .glass-card-darker:hover {
             background-color: #222325;
         }
+
+        /* --- GRUNGE ELEMENTS --- */
+        .corner-distress {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M0,0 L20,5 L15,20 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+        .corner-distress.top-left { top: -5px; left: -5px; }
+        .corner-distress.bottom-right { bottom: -5px; right: -5px; transform: rotate(180deg); }
+
+        .grunge-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(220,255,27,0.3), transparent);
+            margin: 1.5rem 0;
+        }
+
+        .featured-image {
+            border: 4px solid var(--accent-lime);
+            box-shadow: 0 0 30px rgba(220, 255, 27, 0.35);
+            border-radius: 16px;
+            transform: rotate(-2deg);
+            transition: all 0.3s ease-in-out;
+        }
+        .featured-image:hover {
+            transform: rotate(1deg) scale(1.03);
+            box-shadow: 0 0 45px rgba(220, 255, 27, 0.5);
+        }
+        
+        /* --- Responsive layout for the 'For Whom' section --- */
+        @media (max-width: 767px) {
+            .for-whom-card {
+                padding: 0 !important; /* Remove padding from card on mobile */
+            }
+            .for-whom-card .for-whom-text-content {
+                padding: 1.5rem; /* Add padding back to text content */
+            }
+            .for-whom-card .featured-image {
+                transform: rotate(0);
+                border-radius: 0 0 16px 16px; /* Match parent bottom corners */
+                border-left: none;
+                border-right: none;
+                border-bottom: none;
+                margin-top: 1.5rem;
+            }
+            .for-whom-card .featured-image:hover {
+                transform: scale(1) rotate(0);
+                box-shadow: 0 0 30px rgba(220, 255, 27, 0.35);
+            }
+        }
+
 
         /* Модернизированный hero-заголовок */
         .text-glow {
@@ -283,19 +373,22 @@
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
 
         <!-- 1. Hero Section -->
-        <header class="text-center mb-16 md:mb-24 fade-in-up">
-            <div class="mb-8 flex justify-center">
-                <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/zyro-image_(5)-transformed%201.png" alt="Agata DJ" class="w-40 h-40 rounded-full object-cover border-4 border-lime-300 shadow-xl shadow-lime-500/10">
-            </div>
-            <h1 class="hero-title section-title text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJUST 4 FUN</h1>
-            <h2 class="section-title text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
-            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 italic">
-                преврати хаос в систему и выйди на новый уровень дохода.
-            </p>
-            <div class="mt-10">
-                <a href="#tariffs" class="btn btn-primary font-bold text-lg py-3 px-8 rounded-lg inline-block">
-                    УЗНАТЬ ТАРИФЫ И СВОБОДНЫЕ МЕСТА
-                </a>
+        <header class="text-center mb-16 md:mb-24 fade-in-up relative">
+            
+            <div class="relative z-10">
+                <div class="mb-8 flex justify-center">
+                    <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/zyro-image_(5)-transformed%201.png" alt="Agata DJ" class="w-40 h-40 rounded-full object-cover border-4 border-lime-300 shadow-xl shadow-lime-500/10">
+                </div>
+                <h1 class="hero-title section-title text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJUST 4 FUN</h1>
+                <h2 class="section-title text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
+                <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 italic">
+                    преврати хаос в систему и выйди на новый уровень дохода.
+                </p>
+                <div class="mt-10">
+                    <a href="#tariffs" class="btn btn-primary font-bold text-lg py-3 px-8 rounded-lg inline-block">
+                        УЗНАТЬ ТАРИФЫ И СВОБОДНЫЕ МЕСТА
+                    </a>
+                </div>
             </div>
         </header>
 
@@ -309,17 +402,24 @@
                     <p class="text-base text-gray-200" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Длительность: 4 - 6 недель</p>
                 </div>
                 
-                <div class="max-w-3xl mx-auto p-6 mb-12 fade-in-up glass-card">
-                     <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Для кого это обучение?</h3>
-                     <p class="text-gray-400 mb-4 main-text">Для DJ, которые хотят:</p>
-                     <ul class="space-y-3 text-gray-300 main-text">
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Перестать играть за копейки или бесплатно.</li>
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Пробить «стеклянный потолок» и выйти на новый уровень дохода и площадок.</li>
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Избавиться от хаоса в голове, страхов и синдрома самозванца.</li>
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Научиться эффективно продвигать себя и строить карьеру, а не просто сводить треки.</li>
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Найти свой уникальный стиль и баланс между творчеством и коммерцией.</li>
-                        <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
-                     </ul>
+                <div class="max-w-5xl mx-auto mb-12 fade-in-up glass-card for-whom-card">
+                     <div class="flex flex-col md:flex-row items-center md:gap-8 md:p-6">
+                         <div class="md:w-1/2 for-whom-text-content">
+                             <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Для кого это обучение?</h3>
+                             <p class="text-gray-400 mb-4 main-text">Для DJ, которые хотят:</p>
+                             <ul class="space-y-3 text-gray-300 main-text">
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Перестать играть за копейки или бесплатно.</li>
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Пробить «стеклянный потолок» и выйти на новый уровень дохода и площадок.</li>
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Избавиться от хаоса в голове, страхов и синдрома самозванца.</li>
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Научиться эффективно продвигать себя и строить карьеру, а не просто сводить треки.</li>
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Найти свой уникальный стиль и баланс между творчеством и коммерцией.</li>
+                                <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
+                             </ul>
+                         </div>
+                         <div class="md:w-1/2 w-full md:mt-0">
+                             <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/R73A6160.jpg" alt="DJ at work" class="featured-image w-full h-auto object-cover">
+                         </div>
+                     </div>
                 </div>
 
                 <!-- Testimonials Section -->
@@ -375,7 +475,10 @@
                     <!-- Baza Content -->
                     <div id="tab-content-baza" class="tab-content active space-y-4">
                         <div class="p-6 glass-card">
+                             <div class="corner-distress top-left"></div>
+                             <div class="corner-distress bottom-right"></div>
                             <p class="text-gray-300 mb-4 main-text">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
+                             <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 3 месяца</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Подкасты на 6 разных тем</li>
@@ -409,7 +512,10 @@
                     <!-- Supreme Content -->
                     <div id="tab-content-supreme" class="tab-content space-y-4">
                         <div class="p-6 glass-card">
+                             <div class="corner-distress top-left"></div>
+                             <div class="corner-distress bottom-right"></div>
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
+                             <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 5 месяцев</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
@@ -439,7 +545,10 @@
                     <!-- ALL IN Content -->
                     <div id="tab-content-all-in" class="tab-content space-y-4">
                         <div class="p-6 glass-card">
+                             <div class="corner-distress top-left"></div>
+                             <div class="corner-distress bottom-right"></div>
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
+                             <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 7 месяцев</li>
                                  <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
