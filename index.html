@@ -56,17 +56,14 @@
 
         /* Обновленный фон */
         body {
-            background: 
-                /* Darkening overlay */
-                linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-                /* Background image */
+            background:    
+                linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),    
                 url('https://raw.githubusercontent.com/djust4funschool-sys/agata/main/%D1%84%D0%BE%D0%BD.jpg') center/cover no-repeat;
-            background-blend-mode: overlay;
             background-attachment: fixed;
             color: var(--text-light);
-            font-family: 'TT Firs Neue', 'Montserrat', sans-serif; /* Default body font with fallback */
+            font-family: 'TT Firs Neue', 'Montserrat', sans-serif;
             scroll-behavior: smooth;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-x: hidden;
         }
         
         /* --- NEW FONT STYLES --- */
@@ -145,16 +142,6 @@
         }
 
         /* --- GRUNGE ELEMENTS --- */
-        .corner-distress {
-            position: absolute;
-            width: 60px;
-            height: 60px;
-            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath d='M0,0 L20,5 L15,20 Z' fill='rgba(255,255,255,0.05)'/%3E%3C/svg%3E");
-            pointer-events: none;
-        }
-        .corner-distress.top-left { top: -5px; left: -5px; }
-        .corner-distress.bottom-right { bottom: -5px; right: -5px; transform: rotate(180deg); }
-
         .grunge-divider {
             height: 2px;
             background: linear-gradient(90deg, transparent, rgba(220,255,27,0.3), transparent);
@@ -414,8 +401,6 @@
                     <!-- Baza Content -->
                     <div id="tab-content-baza" class="tab-content active space-y-4">
                         <div class="p-6 glass-card">
-                             <div class="corner-distress top-left"></div>
-                             <div class="corner-distress bottom-right"></div>
                             <p class="text-gray-300 mb-4 main-text">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
                              <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
@@ -451,8 +436,6 @@
                     <!-- Supreme Content -->
                     <div id="tab-content-supreme" class="tab-content space-y-4">
                         <div class="p-6 glass-card">
-                             <div class="corner-distress top-left"></div>
-                             <div class="corner-distress bottom-right"></div>
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
                              <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
@@ -484,8 +467,6 @@
                     <!-- ALL IN Content -->
                     <div id="tab-content-all-in" class="tab-content space-y-4">
                         <div class="p-6 glass-card">
-                             <div class="corner-distress top-left"></div>
-                             <div class="corner-distress bottom-right"></div>
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
                              <div class="grunge-divider"></div>
                              <ul class="space-y-3 text-gray-300 main-text">
