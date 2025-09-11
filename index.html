@@ -10,11 +10,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
+    <!-- Google Fonts for Fallback -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;600&family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+
     <style>
         /* --- CUSTOM FONT FACES --- */
         @font-face {
             font-family: 'Buyan';
-            /* Switched to the new repository */
             src: url('https://raw.githubusercontent.com/djust4funschool-sys/autumn_camp/main/fonts/Buyan.woff') format('woff');
             font-weight: normal;
             font-style: normal;
@@ -23,8 +27,7 @@
 
         @font-face {
             font-family: 'TT Firs Neue';
-             /* Switched to the new repository */
-            src: url('https://raw.githubusercontent.com/djust4funschool-sys/autumn_camp/main/fonts/TT-Firs-Neue-Regular.woff') format('woff');
+             src: url('https://raw.githubusercontent.com/djust4funschool-sys/autumn_camp/main/fonts/TT-Firs-Neue-Regular.woff') format('woff');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -39,6 +42,16 @@
             --accent-lime-darker: #DEFC3A;
             --surface-glass: rgba(255, 255, 255, 0.03);
             --border-glass: rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Explicit Selection Styles for Mobile */
+        ::selection {
+            background-color: var(--accent-lime);
+            color: #000;
+        }
+        ::-moz-selection { /* For Firefox */
+            background-color: var(--accent-lime);
+            color: #000;
         }
 
         /* Обновленный фон */
@@ -59,21 +72,27 @@
                 linear-gradient(135deg, #0B0B0B 0%, #141414 25%, #0F0F0F 50%, #161616 75%, #0A0A0A 100%);
             background-attachment: fixed;
             color: var(--text-light);
-            font-family: 'TT Firs Neue', Arial, sans-serif; /* Default body font with fallback */
+            font-family: 'TT Firs Neue', 'Montserrat', sans-serif; /* Default body font with fallback */
             scroll-behavior: smooth;
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
         
         /* --- NEW FONT STYLES --- */
-        /* Section headers with fallback */
+        /* Section headers with a better fallback */
         .section-title {
-            font-family: 'Buyan', Impact, 'Arial Black', sans-serif !important;
-            font-weight: bold; /* Make Buyan font bold */
+            font-family: 'Buyan', 'Bebas Neue', sans-serif !important;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Main hero title needs Buyan as well */
+        .hero-title {
+            font-family: 'Buyan', 'Bebas Neue', sans-serif !important;
         }
 
         /* Text blocks with fallback */
         .main-text {
-             font-family: 'TT Firs Neue', Arial, sans-serif !important;
+             font-family: 'TT Firs Neue', 'Montserrat', sans-serif !important;
         }
 
         /* Модернизированные стили для кнопок */
@@ -89,7 +108,7 @@
             letter-spacing: 0.5px;
             transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
             transform-style: preserve-3d;
-            font-family: 'TT Firs Neue', Arial, sans-serif;
+            font-family: 'TT Firs Neue', 'Montserrat', sans-serif;
         }
         .btn-primary:hover {
             transform: translateY(-2px) scale(1.02);
@@ -99,7 +118,7 @@
                 inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
-        .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--border-glass); font-family: 'TT Firs Neue', Arial, sans-serif;}
+        .btn-secondary { background-color: transparent; color: var(--text-light); border: 1px solid var(--border-glass); font-family: 'TT Firs Neue', 'Montserrat', sans-serif;}
         .btn-secondary:hover { background-color: var(--surface-glass); color: var(--text-light); border-color: rgba(220, 255, 27, 0.15); }
 
         /* Стили для табов */
@@ -135,6 +154,20 @@
                 0 0 20px rgba(220, 255, 27, 0.5),
                 0 0 40px rgba(220, 255, 27, 0.3),
                 0 0 80px rgba(220, 255, 27, 0.1);
+        }
+        
+        /* --- NEON GLOW FOR PLUSES --- */
+        @keyframes neon-glow {
+            0%, 100% {
+                text-shadow: 0 0 4px rgba(220, 255, 27, 0.7), 0 0 8px rgba(220, 255, 27, 0.5);
+            }
+            50% {
+                text-shadow: 0 0 8px rgba(220, 255, 27, 1), 0 0 16px rgba(220, 255, 27, 0.7);
+            }
+        }
+        .neon-plus {
+            display: inline-block;
+            animation: neon-glow 2.5s ease-in-out infinite;
         }
 
         /* Animated border glow */
@@ -253,12 +286,12 @@
             <section id="content-dj">
                  <div class="text-center mb-12 fade-in-up">
                     <h2 class="section-title text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ПРОГРАММА</h2>
-                    <p class="mt-2 text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">Обучение [Сентябрь — Ноябрь]</p>
-                    <p class="text-base text-gray-200" style="font-family: 'TT Firs Neue', Arial, sans-serif;">Длительность: 4 - 6 недель</p>
+                    <p class="mt-2 text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Обучение [Сентябрь — Ноябрь]</p>
+                    <p class="text-base text-gray-200" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Длительность: 4 - 6 недель</p>
                 </div>
                 
                 <div class="max-w-3xl mx-auto p-6 mb-12 fade-in-up glass-card">
-                     <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', Arial, sans-serif;">Для кого это обучение?</h3>
+                     <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Для кого это обучение?</h3>
                      <p class="text-gray-400 mb-4 main-text">Для DJ, которые хотят:</p>
                      <ul class="space-y-3 text-gray-300 main-text">
                         <li class="flex"><span class="text-lime-300 mr-3">✅</span>Перестать играть за копейки или бесплатно.</li>
@@ -325,31 +358,31 @@
                         <div class="p-6 glass-card">
                             <p class="text-gray-300 mb-4 main-text">Идеально для тех, кто хочет заложить прочный фундамент для своей карьеры, разобраться с основными блоками и получить базовые инструменты для роста.</p>
                              <ul class="space-y-3 text-gray-300 main-text">
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 3 месяца</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Подкасты на 6 разных тем</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Домашние задания для внедрения изученного материала</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Групповой чат в Telegram (без прямой обратной связи от Агаты)</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ в комьюнити учеников Агаты</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 3 месяца</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Подкасты на 6 разных тем</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Домашние задания для внедрения изученного материала</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Групповой чат в Telegram (без прямой обратной связи от Агаты)</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ в комьюнити учеников Агаты</li>
                              </ul>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №1: Цели и Декомпозиция</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №1: Цели и Декомпозиция</h4>
                             <p class="text-gray-400 mt-2 main-text">Зачем ставить цель? Почему и как необходимо декомпозировать свой путь в диджеинге.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №2,3: Техническая База</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №2,3: Техническая База</h4>
                             <p class="text-gray-400 mt-2 main-text">Как охотиться за музыкой, где качать, как слушать и слышать. Грамотная библиотека и архитектура микса.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №4: База по Позиционированию</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №4: База по Позиционированию</h4>
                             <p class="text-gray-400 mt-2 main-text">Круги влияния: физический/внутренний, медиа/внешний. Главный инструмент влияния: контент.</p>
                         </div>
                          <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ВИДЕОПОДКАСТ №5: Образ Артиста</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ВИДЕОПОДКАСТ №5: Образ Артиста</h4>
                             <p class="text-gray-400 mt-2 main-text">Почему образ необходим. Якоря и триггеры. Собственный стиль, как конкурентное преимущество.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №6: Психологические Баги DJ</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №6: Психологические Баги DJ</h4>
                             <p class="text-gray-400 mt-2 main-text">Выявляем и убираем главные тормоза: страх самозванца, страх цены/отказа, ограничивающие убеждения.</p>
                         </div>
                     </div>
@@ -359,27 +392,27 @@
                         <div class="p-6 glass-card">
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто готов к максимальному прорыву, масштабированию и хочет получить все инструменты для высоких гонораров, гастролей и работы с комьюнити.</p>
                              <ul class="space-y-3 text-gray-300 main-text">
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 5 месяцев</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Личное взаимодействие с Агатой</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> 2 Мастермайнда с Агатой: Групповые разборы</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Отдельный канал тарифа</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 5 месяцев</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> ВСЁ, что есть в тарифе «Baza»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Личное взаимодействие с Агатой</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> 2 Мастермайнда с Агатой: Групповые разборы</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Отдельный канал тарифа</li>
                              </ul>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ВИДЕОПОДКАСТ №7: Создаем впечатление через контент</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ВИДЕОПОДКАСТ №7: Создаем впечатление через контент</h4>
                             <p class="text-gray-400 mt-2 main-text">Какой бывает контент: горячий, информационный, повышающий авторитет. Как снимать контент на вечеринках.</p>
                         </div>
                          <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №8: Внутри комьюнити</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №8: Внутри комьюнити</h4>
                             <p class="text-gray-400 mt-2 main-text">Почему важно быть в комьюнити? Стратегия ребенка. Стратегия Творца. Принципы внедрения в комьюнити.</p>
                         </div>
                          <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ПОДКАСТ №9: Искусство переговоров</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ПОДКАСТ №9: Искусство переговоров</h4>
                             <p class="text-gray-400 mt-2 main-text">Что делать, когда вы получили заявку? Как объявить и поменять гонорар. Работа с брендами.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">ВИДЕОПОДКАСТ №10: Подготовка к гастролям</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">ВИДЕОПОДКАСТ №10: Подготовка к гастролям</h4>
                             <p class="text-gray-400 mt-2 main-text">3 источника информации о вас: Tap link, Press pack, Press kit. Tех-, контент- и бытовой райдер.</p>
                         </div>
                     </div>
@@ -389,37 +422,37 @@
                         <div class="p-6 glass-card">
                              <p class="text-gray-300 mb-4 main-text">Для тех, кто не готов к компромиссам. Это полное погружение, где мы не просто строим карьеру, а создаем артиста, способного управлять своей реальностью.</p>
                              <ul class="space-y-3 text-gray-300 main-text">
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Доступ к материалам на 7 месяцев</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Глубокая трансформация мышления на сессиях с психологом</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по написанию музыки от Андрея Paysage</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по созданию контента с помощью AI</li>
-                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1">➕</span> Мастер-класс по организации вечеринок от Влада Че</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Доступ к материалам на 7 месяцев</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> ВСЁ, что есть в тарифе «Supreme»</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Глубокая трансформация мышления на сессиях с психологом</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Мастер-класс по написанию музыки от Андрея Paysage</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Мастер-класс по созданию контента с помощью AI</li>
+                                 <li class="flex items-start"><span class="text-lime-300 mr-3 mt-1 neon-plus">➕</span> Мастер-класс по организации вечеринок от Влада Че</li>
                              </ul>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">🧠 2 сессии с психологом</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">🧠 2 сессии с психологом</h4>
                             <p class="text-gray-400 mt-2 main-text">Глубокая проработка синдрома самозванца, страха роста и убеждений, которые мешают вам называть высокие гонорары.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">🎹 Написание музыки</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">🎹 Написание музыки</h4>
                             <p class="text-sm text-gray-400 mt-1">Спикер: Андрей Paysage</p>
                             <p class="text-gray-400 mt-2 main-text">Создание трека с нуля, анализ композиций, развитие уникального стиля. Секреты профессионального звука.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">🤖 Создание контента с помощью AI</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">🤖 Создание контента с помощью AI</h4>
                             <p class="text-sm text-gray-400 mt-1">Спикер: Анастасия Вахромеева</p>
                             <p class="text-gray-400 mt-2 main-text">Научитесь реализовывать контент-стратегии с помощью ИИ. Делегируйте нейросетям создание идей, сценариев и текстов.</p>
                         </div>
                         <div class="p-6 glass-card">
-                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', Arial, sans-serif;">🪩 Организация вечеринок</h4>
+                            <h4 class="font-heading font-bold text-lg" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">🪩 Организация вечеринок</h4>
                             <p class="text-sm text-gray-400 mt-1">Спикер: Влад Че</p>
                             <p class="text-gray-400 mt-2 main-text">Пошаговая организация мероприятия для артиста: от концепции до реализации. Ключевые факторы успеха: как спланировать и провести успешное событие.</p>
                         </div>
                     </div>
                 </div>
                  <div class="text-center mt-12">
-                     <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-bold text-lg py-3 px-6 sm:px-8 rounded-lg inline-block">НАПИСАТЬ В ЛС, ЧТОБЫ УЗНАТЬ ЦЕНУ</a>
+                     <a href="https://t.me/Agata_DJ4FUN" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-bold text-base md:text-lg py-3 px-6 rounded-lg inline-block">НАПИСАТЬ В ЛС, ЧТОБЫ УЗНАТЬ ЦЕНУ</a>
                  </div>
 
             </section>
@@ -446,7 +479,7 @@
         <!-- Footer with updated year -->
         <footer class="mt-20 md:mt-32">
              <p class="text-center text-gray-600 mt-8 text-sm">© 2025 DJust 4 Fun. Все права защищены.</p>
-             <div class="text-center text-gray-500 mt-6 text-sm space-y-2" style="font-family: 'TT Firs Neue', Arial, sans-serif;">
+             <div class="text-center text-gray-500 mt-6 text-sm space-y-2" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">
                  <div class="text-gray-600 space-y-1">
                     <p>ИП Захарова-Хлущевская Агата Онореевна</p>
                     <p>ИНН: 772578516741</p>
