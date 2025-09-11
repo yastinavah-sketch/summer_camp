@@ -102,8 +102,8 @@
             </div>
             <h1 class="font-display text-6xl sm:text-8xl md:text-9xl text-glow" style="color: var(--accent-lime);">DJust 4 Fun</h1>
             <h2 class="font-heading font-bold text-xl sm:text-2xl md:text-3xl mt-2 tracking-wide">КОМПЛЕКСНАЯ СИСТЕМА ПО САМОПРОДВИЖЕНИЮ АРТИСТОВ</h2>
-            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300">
-                Преврати хаос в систему и выйди на новый уровень дохода.
+            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 italic">
+                преврати хаос в систему и выйди на новый уровень дохода.
             </p>
             <div class="mt-10">
                 <a href="#tariffs" class="btn btn-primary font-heading font-bold text-lg py-3 px-8 rounded-lg inline-block">
@@ -118,7 +118,8 @@
             <section id="content-dj">
                  <div class="text-center mb-12">
                     <h2 class="font-display text-4xl sm:text-5xl md:text-6xl text-glow" style="color: var(--accent-lime);">ПРОГРАММА</h2>
-                    <p class="font-heading mt-2 text-lg">Обучение [Сентябрь — Ноябрь] | Длительность: 4 - 6 недель</p>
+                    <p class="font-heading mt-2 text-lg">Обучение [Сентябрь — Ноябрь]</p>
+                    <p class="font-heading text-base text-gray-400">Длительность: 4 - 6 недель</p>
                 </div>
                 
                 <div class="max-w-3xl mx-auto bg-zinc-900 p-6 rounded-lg border border-zinc-800 mb-12">
@@ -315,7 +316,7 @@
              <div class="text-center text-gray-500 mt-6 text-sm space-x-4">
                 <a href="https://docs.google.com/document/d/1vmhDjXwvH2g7IFRNpjGo6Eft-c_P1qBMqCSLq5XFx-I/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Договор оферты</a>
                 <span class="text-gray-600">|</span>
-                <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Политика конфиденциальности</a>
+                <a href="https://docs.google.com/document/d/10eXuvW3stQLqPqW6WNgwwQpl1Iq_326uHZxEALlSTz8/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="hover:text-lime-300 transition">Политика конфиденциальности</a>
              </div>
         </footer>
 
@@ -352,55 +353,13 @@
                 const originalText = textElement.textContent.trim();
 
                 card.addEventListener('mouseover', () => {
+                    // Отключаем анимацию для мобильных устройств
+                    if (window.innerWidth < 1024) {
+                        return;
+                    }
                     // Run animation only once
                     if (card.classList.contains('has-typed')) {
                         return;
-                    }
-                    card.classList.add('has-typed');
-
-                    const speed = parseInt(textElement.dataset.speed) || 30;
-                    
-                    textElement.textContent = ''; // Clear text
-                    textElement.classList.add('is-typing'); // Show cursor
-
-                    let i = 0;
-                    const typeInterval = setInterval(() => {
-                        if (i < originalText.length) {
-                            textElement.textContent += originalText.charAt(i);
-                            i++;
-                        } else {
-                            clearInterval(typeInterval);
-                            // Animation finished, remove cursor class
-                            textElement.classList.remove('is-typing');
-                        }
-                    }, speed);
-                });
-            });
-
-            // New Slider Logic for Testimonials
-            const slider = document.getElementById('testimonial-slider');
-            const slides = slider.children;
-            const prevButton = document.getElementById('prev-testimonial');
-            const nextButton = document.getElementById('next-testimonial');
-            let currentIndex = 0;
-
-            function showSlide(index) {
-                const offset = -index * 100;
-                slider.style.transform = `translateX(${offset}%)`;
-            }
-
-            nextButton.addEventListener('click', () => {
-                currentIndex = (currentIndex + 1) % slides.length;
-                showSlide(currentIndex);
-            });
-
-            prevButton.addEventListener('click', () => {
-                currentIndex = (currentIndex - 1 + slides.length) % slides.length;
-                showSlide(currentIndex);
-            });
-        });
-    </script>
-</body>
-</html>
+// ... existing code ... -->
 
 
