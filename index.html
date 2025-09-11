@@ -76,15 +76,6 @@
             scroll-behavior: smooth;
             overflow-x: hidden; /* Prevent horizontal scroll */
         }
-
-        /* --- GRUNGE ANIMATIONS --- */
-        @keyframes shaky-text {
-            0%, 100% { transform: translate(0, 0) rotate(0); }
-            20% { transform: translate(0.8px, -0.8px) rotate(0.15deg); }
-            40% { transform: translate(-0.8px, 0.5px) rotate(-0.15deg); }
-            60% { transform: translate(0.5px, 0.8px) rotate(0.05deg); }
-            80% { transform: translate(-0.5px, -0.5px) rotate(-0.05deg); }
-        }
         
         /* --- NEW FONT STYLES --- */
         /* Section headers with a better fallback */
@@ -93,7 +84,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             font-weight: bold;
-            animation: shaky-text 4s ease-in-out infinite;
         }
 
         /* Main hero title needs Buyan as well */
@@ -190,29 +180,6 @@
             transform: rotate(1deg) scale(1.03);
             box-shadow: 0 0 45px rgba(220, 255, 27, 0.5);
         }
-        
-        /* --- Responsive layout for the 'For Whom' section --- */
-        @media (max-width: 767px) {
-            .for-whom-card {
-                padding: 0 !important; /* Remove padding from card on mobile */
-            }
-            .for-whom-card .for-whom-text-content {
-                padding: 1.5rem; /* Add padding back to text content */
-            }
-            .for-whom-card .featured-image {
-                transform: rotate(0);
-                border-radius: 0 0 16px 16px; /* Match parent bottom corners */
-                border-left: none;
-                border-right: none;
-                border-bottom: none;
-                margin-top: 1.5rem;
-            }
-            .for-whom-card .featured-image:hover {
-                transform: scale(1) rotate(0);
-                box-shadow: 0 0 30px rgba(220, 255, 27, 0.35);
-            }
-        }
-
 
         /* Модернизированный hero-заголовок */
         .text-glow {
@@ -377,8 +344,8 @@
                 </div>
                 
                 <div class="max-w-5xl mx-auto mb-12 fade-in-up glass-card for-whom-card">
-                     <div class="flex flex-col md:flex-row items-center md:gap-8 md:p-6">
-                         <div class="md:w-1/2 for-whom-text-content">
+                     <div class="flex flex-col sm:flex-row items-center sm:gap-8 p-4 sm:p-6">
+                         <div class="w-full sm:w-3/5">
                              <h3 class="font-heading font-bold text-xl mb-4" style="font-family: 'TT Firs Neue', 'Montserrat', sans-serif;">Для кого это обучение?</h3>
                              <p class="text-gray-400 mb-4 main-text">Для DJ, которые хотят:</p>
                              <ul class="space-y-3 text-gray-300 main-text">
@@ -390,7 +357,7 @@
                                 <li class="flex"><span class="text-lime-300 mr-3">✅</span>Попасть в поддерживающее комьюнити.</li>
                              </ul>
                          </div>
-                         <div class="md:w-1/2 w-full md:mt-0">
+                         <div class="w-full sm:w-2/5 mt-8 sm:mt-0">
                              <img src="https://raw.githubusercontent.com/djust4funschool-sys/agata/main/R73A6160.jpg" alt="DJ at work" class="featured-image w-full h-auto object-cover">
                          </div>
                      </div>
