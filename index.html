@@ -49,11 +49,11 @@
         /* Анимация печатной машинки */
         .testimonial-text {
             font-family: 'Inter', sans-serif; /* TT Firs Neue substitute */
-            min-height: 180px; /* Увеличена высота для предотвращения "прыжка" макета */
+            min-height: 180px; /* Фиксированная высота для предотвращения "прыжка" макета */
             display: flex;
             align-items: center;
-            justify-content: center; /* Добавлено для центрирования */
-            text-align: center; /* Добавлено для центрирования */
+            justify-content: center;
+            text-align: center;
         }
         
         .testimonial-text.is-typing {
@@ -80,14 +80,13 @@
                 translateZ(60px)
                 rotateX(5deg)
                 rotateY(5deg);
-                /* scale(1.03) убран, чтобы избежать увеличения текста */
             box-shadow:
                 0 30px 60px rgba(0, 0, 0, 0.4),
                 0 0 40px rgba(220, 255, 27, 0.2),
                 inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
         .testimonial-card-3d:hover .testimonial-text {
-            text-shadow: 0 0 10px rgba(220, 255, 27, 0.5); /* Усилена подсветка */
+            text-shadow: 0 0 10px rgba(220, 255, 27, 0.5);
         }
     </style>
 </head>
@@ -144,25 +143,25 @@
                                 <!-- Testimonial 1 -->
                                 <div class="w-full flex-shrink-0">
                                     <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
-                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30">💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».</p>
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30" data-original-text="💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».">💡 «Ты единственная, кто системно дает информацию. В целом у меня выстроилась стратегия в голове».</p>
                                     </div>
                                 </div>
                                 <!-- Testimonial 2 -->
                                 <div class="w-full flex-shrink-0">
                                     <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
-                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30">✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».</p>
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30" data-original-text="✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».">✨ «Главным открытием стало — заходить надо через тусовку и знакомства. Выбирают друзей, а не по проф. данным и качествам».</p>
                                     </div>
                                 </div>
                                 <!-- Testimonial 3 -->
                                 <div class="w-full flex-shrink-0">
                                     <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
-                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="25">💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».</p>
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="25" data-original-text="💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».">💰 «Моя главная проблема была в том, что я понятия не имела, как вести переговоры с заказчиками. Теперь я не готова играть за 3000 в час. Недавно мне заплатили 20 000 за 2.5 часа».</p>
                                     </div>
                                 </div>
                                 <!-- Testimonial 4 -->
                                 <div class="w-full flex-shrink-0">
                                      <div class="bg-zinc-900 p-8 rounded-lg border border-zinc-800 testimonial-card-3d">
-                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30">💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».</p>
+                                        <p class="text-xl text-gray-300 leading-relaxed testimonial-text italic" data-speed="30" data-original-text="💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».">💪 «Пришла с пулом страхов и блоков. Кэмп для меня был и как психолог, и как наставник. Благодаря ему я почувствовала уверенность в себе».</p>
                                     </div>
                                 </div>
                             </div>
@@ -331,35 +330,95 @@
             tabButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const tabId = button.dataset.tab;
-
-                    // Update buttons state
                     tabButtons.forEach(btn => btn.classList.remove('active'));
                     button.classList.add('active');
-
-                    // Update content visibility
                     tabContents.forEach(content => {
-                        if (content.id === `tab-content-${tabId}`) {
-                            content.classList.add('active');
-                        } else {
-                            content.classList.remove('active');
-                        }
+                        content.classList.toggle('active', content.id === `tab-content-${tabId}`);
                     });
                 });
             });
 
-            // Typewriter effect on hover
-            document.querySelectorAll('.testimonial-card-3d').forEach(card => {
+            // --- Corrected Slider and Typewriter Logic ---
+            const sliderContainer = document.getElementById('testimonial-slider');
+            const testimonialCards = document.querySelectorAll('.testimonial-card-3d');
+            const prevButton = document.getElementById('prev-testimonial');
+            const nextButton = document.getElementById('next-testimonial');
+            let currentIndex = 0;
+            let currentTypewriterInterval; // To manage running animations
+
+            // Function to start typewriter effect
+            function startTypewriter(card) {
+                // Prevent animation on mobile
+                if (window.innerWidth < 1024) return;
+                
                 const textElement = card.querySelector('.testimonial-text');
-                const originalText = textElement.textContent.trim();
+                const originalText = textElement.dataset.originalText;
 
-                card.addEventListener('mouseover', () => {
-                    // Отключаем анимацию для мобильных устройств
-                    if (window.innerWidth < 1024) {
-                        return;
+                // Stop any previous animation
+                if (currentTypewriterInterval) {
+                    clearInterval(currentTypewriterInterval);
+                }
+
+                // Don't restart if already typed
+                if (card.dataset.typed === 'true') return;
+                
+                card.dataset.typed = 'true';
+                const speed = parseInt(textElement.dataset.speed) || 30;
+                
+                textElement.textContent = '';
+                textElement.classList.add('is-typing');
+                
+                let i = 0;
+                currentTypewriterInterval = setInterval(() => {
+                    if (i < originalText.length) {
+                        textElement.textContent += originalText.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(currentTypewriterInterval);
+                        textElement.classList.remove('is-typing');
                     }
-                    // Run animation only once
-                    if (card.classList.contains('has-typed')) {
-                        return;
-// ... existing code ... -->
+                }, speed);
+            }
 
+            // Reset animation state
+            function resetTypewriter(card) {
+                if (currentTypewriterInterval) {
+                    clearInterval(currentTypewriterInterval);
+                }
+                const textElement = card.querySelector('.testimonial-text');
+                textElement.textContent = textElement.dataset.originalText;
+                textElement.classList.remove('is-typing');
+                card.dataset.typed = 'false';
+            }
+
+            // Attach hover event listeners
+            testimonialCards.forEach(card => {
+                card.addEventListener('mouseenter', () => startTypewriter(card));
+            });
+            
+            // Slider functionality
+            function updateSlider() {
+                const offset = -currentIndex * 100;
+                sliderContainer.style.transform = `translateX(${offset}%)`;
+                
+                // Reset all typewriters when slide changes
+                testimonialCards.forEach(card => resetTypewriter(card));
+            }
+
+            nextButton.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % testimonialCards.length;
+                updateSlider();
+            });
+
+            prevButton.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + testimonialCards.length) % testimonialCards.length;
+                updateSlider();
+            });
+
+            // Initial setup
+            updateSlider();
+        });
+    </script>
+</body>
+</html>
 
